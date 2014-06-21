@@ -3,30 +3,30 @@ class window.Hand extends Backbone.Collection
   model: Card
 
   initialize: (array, @deck, @isDealer) ->
-    @set 'stood', false
-    # @set 'bust', false
-    @set 'dealerScore', 0
 
   hit: ->
-    @set 'stood', false
-    console.log(@scores()[0] + @at(0).get 'value')
-    @set 'dealerScore', (@scores()[0] + @at(0).get 'value')
-    # if @isDealer
-    #   if @get 'dealerScore' > 21 then @set 'bust', true
-    # else
-    #   if @scores() > 21 then @set 'bust', true
-    @trigger 'hit'
-    # console.log(@scores())
     @add(@deck.pop()).last()
+    @checkBust()
+    @trigger 'hit'
 
   stand: ->
     @trigger 'stand', @
-    @set 'stood', true
+
+  bust: ->
+    @trigger 'bust', @
+
+  dealerScores: ->
+    @scores()[0] + @at(0).get 'value'
 
   dealerChoice: ->
-    console.log('hi')
-    if @get 'dealerScore' >= 17 then @stand()
+    if @dealerScores() >= 17 then @stand()
     else @hit()
+
+  checkBust: ->
+    if @isDealer
+      if @dealerScores() > 21 then @bust()
+    else
+      if @scores() > 21 then @bust()
 
   scores: ->
     # The scores are an array of potential scores.
