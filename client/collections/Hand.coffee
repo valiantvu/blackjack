@@ -16,20 +16,18 @@ class window.Hand extends Backbone.Collection
     @trigger 'bust', @
 
   dealerScores: ->
-    score = map @scores(), (val) ->
-      val + @at(0).get 'value'
-    # @scores()[0] + @at(0).get 'value',
+    score = _.map @scores(), ((val) ->
+      val + @at(0).get 'value'), @
 
   dealerChoice: ->
-    if @dealerScores() >= 17 then @stand()
-    else @hit()
+    if (_.every @dealerScores(), (val) -> val < 17) then @hit()
+    else @stand()
 
   checkBust: ->
-    # Should only check each element in array if passed array of 2
-    # if @isDealer
-    #   if @dealerScores()[0] > 21 and @dealerScores()[1] then @bust()
-    # else
-    #   if @scores()[0] > 21 and @scores()[1] then @bust()
+    if @isDealer
+      @bust() if _.every @dealerScores(), (val) -> val > 21
+    else
+      @bust() if _.every @scores(), (val) -> val > 21
 
   scores: ->
     # The scores are an array of potential scores.

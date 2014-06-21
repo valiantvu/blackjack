@@ -12,10 +12,11 @@ class window.App extends Backbone.Model
     # Event listeners
 
     @get('playerHand').on 'bust', () =>
-      console.log('BUST');
+      console.log('PLAYER BUST');
       @set 'winner', @
 
     @get('dealerHand').on 'bust', () =>
+      console.log('DEALER BUST');
       @set 'winner', @
 
     @get('playerHand').on 'hit stand', () => @get('dealerHand').dealerChoice()
@@ -29,8 +30,18 @@ class window.App extends Backbone.Model
       if @get 'dealerStood' then @checkScores()
 
   checkScores: ->
-    # Should only check each element in array if passed array of 2
-    # if @get('playerHand').scores()[0] > @get('dealerHand'.dealerScores()[0]) then @set 'winner', @get 'playerHand'
-    # else @set 'winner', @get 'dealerHand'
+    playerMax = 0
+    dealerMax = 0
+
+    _.each @get('playerHand').scores(), (val) ->
+      if val <= 21
+        if val > playerMax then playerMax = val
+
+    _.each @get('dealerHand').dealerScores(), (val) ->
+      if val <= 21
+        if val > dealerMax then dealerMax = val
+
+    if dealerMax > playerMax then @set 'winner', @get 'dealerHand'
+    else @set 'winner', @get 'playerHand'
 
 
