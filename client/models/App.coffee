@@ -12,12 +12,10 @@ class window.App extends Backbone.Model
     # Event listeners
 
     @get('playerHand').on 'bust', () =>
-      console.log('PLAYER BUST');
-      @set 'winner', @
+      @set 'winner', 'Dealer Wins'
 
     @get('dealerHand').on 'bust', () =>
-      console.log('DEALER BUST');
-      @set 'winner', @
+      @set 'winner', 'Player Wins'
 
     @get('playerHand').on 'hit stand', () => @get('dealerHand').dealerChoice()
 
@@ -41,7 +39,7 @@ class window.App extends Backbone.Model
       if val <= 21
         if val > dealerMax then dealerMax = val
 
-    if dealerMax > playerMax then @set 'winner', @get 'dealerHand'
-    else @set 'winner', @get 'playerHand'
+    if dealerMax > playerMax then @set 'winner', 'Dealer Wins'
+    else @set 'winner', 'Player Wins'
 
 

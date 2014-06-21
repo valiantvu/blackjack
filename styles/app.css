@@ -8,9 +8,27 @@
 }
 
 .covered {
-  background-color: black;
+  background-image: url("../img/card-back.png");
 }
 
 .hand {
   overflow: auto;
+}
+
+.gameover {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin-top: -450px;
+  z-index: 1;
+  background-color: grey;
+  opacity: .9;
+}
+
+.winner {
+  color: blue;
+  font-size: 200px;
+  z-index: 1;
+  position: relative;
+  margin-top: -450px;
 }
