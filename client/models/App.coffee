@@ -29,7 +29,8 @@ class window.App extends Backbone.Model
       if @get 'dealerStood' then @checkScores()
 
   checkScores: ->
-    if @get('playerHand').scores()[0] > @get('dealerHand'.dealerScores()) then @set 'winner', @get 'playerHand'
-    else @set 'winner', @get 'dealerHand'
+    # Should only check each element in array if passed array of 2
+    # if @get('playerHand').scores()[0] > @get('dealerHand'.dealerScores()[0]) then @set 'winner', @get 'playerHand'
+    # else @set 'winner', @get 'dealerHand'
 
 
