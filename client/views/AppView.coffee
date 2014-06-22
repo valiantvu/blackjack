@@ -11,9 +11,7 @@ class window.AppView extends Backbone.View
     "click .stand-button": -> @model.get('playerHand').stand()
 
   initialize: ->
-    @model.on 'change:winner', () =>
-      $('body').append('<div class="gameover"></div>')
-      $('.gameover').append('<h1 class="winner">' + @model.get('winner') + '</h1>')
+    @model.on 'change:winner', => @renderWin()
     @render()
 
   render: ->
@@ -21,6 +19,12 @@ class window.AppView extends Backbone.View
     @$el.html(@template(@model.get('attributes')))
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+
+  renderWin: ->
+    setTimeout (=>
+      $('body').append('<div class="gameover"></div>')
+      $('.gameover').append('<h1 class="winner">' + @model.get('winner') + '</h1>')), 1000
+
 
 
  # <% if (winner) { %><h1><%= winner %></h1><% } %>

@@ -7,7 +7,10 @@ class window.Hand extends Backbone.Collection
   hit: ->
     @add(@deck.pop()).last()
     @checkBust()
-    @trigger 'hit'
+    if @isDealer
+      @trigger 'dealerHit'
+    else
+      @trigger 'playerHit'
 
   stand: ->
     @trigger 'stand', @

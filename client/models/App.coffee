@@ -17,15 +17,18 @@ class window.App extends Backbone.Model
     @get('dealerHand').on 'bust', () =>
       @set 'winner', 'Player Wins'
 
-    @get('playerHand').on 'hit stand', () => @get('dealerHand').dealerChoice()
+    @get('playerHand').on 'stand', () =>
+      @set 'playerStood', true
+      if @get 'dealerStood' then @checkScores()
+
+    @get('playerHand').on 'playerHit stand', () => @get('dealerHand').dealerChoice()
+
+    @get('dealerHand').on 'dealerHit', () => if @get 'playerStood' then @get('dealerHand').dealerChoice()
 
     @get('dealerHand').on 'stand', () =>
       @set 'dealerStood', true
       if @get 'playerStood' then @checkScores()
 
-    @get('playerHand').on 'stand', () =>
-      @set 'playerStood', true
-      if @get 'dealerStood' then @checkScores()
 
   checkScores: ->
     playerMax = 0
