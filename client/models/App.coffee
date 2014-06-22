@@ -11,6 +11,9 @@ class window.App extends Backbone.Model
 
     # Event listeners
 
+    @.on 'change:winner', () =>
+      @get('dealerHand').first().flip()
+
     @get('playerHand').on 'bust', () =>
       @set 'winner', 'Dealer Wins'
 
@@ -28,7 +31,6 @@ class window.App extends Backbone.Model
     @get('dealerHand').on 'stand', () =>
       @set 'dealerStood', true
       if @get 'playerStood' then @checkScores()
-
 
   checkScores: ->
     playerMax = 0
